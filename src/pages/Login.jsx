@@ -60,13 +60,11 @@ const Login = () => {
             />
           </div>
           <div className="form-control mt-6">
-            <button className="btn bg-default text-white hover:bg-light hover:border-light ">
-              Login
-            </button>
+            <button className="btn btn-block btn-primary ">Login</button>
             <div className="divider">OR</div>
             <button
               onClick={handleGoogleSignIn}
-              className=" btn bg-base-200 hover:bg-base-100"
+              className=" btn btn-block bg-base-200 hover:bg-base-100"
             >
               <FcGoogle className="text-2xl" />
               Sign in with Google
