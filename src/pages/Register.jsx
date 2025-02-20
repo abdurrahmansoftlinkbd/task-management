@@ -38,86 +38,81 @@ const Register = () => {
   };
 
   return (
-    <div className="hero my-24 font-inter">
-      <div className="card bg-base-100 w-full max-w-sm md:max-w-4xl shrink-0 shadow-2xl">
-        <form onSubmit={handleRegister} className="card-body">
-          <h2 className="uppercase text-center font-semibold text-3xl font-montserrat">
-            Create account
-          </h2>
-          <div className="md:flex md:gap-2">
-            <div className="form-control w-full">
+    <div className="min-h-screen flex items-center justify-center bg-base-200 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="card bg-base-100 w-full max-w-md shadow-xl">
+        <div className="card-body p-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold">Create your account</h2>
+            <p className="text-sm text-base-content/60 mt-2">
+              Join us to get started with your journey
+            </p>
+          </div>
+
+          <form onSubmit={handleRegister} className="space-y-4">
+            <div className="form-control">
               <label className="label">
-                <span className="label-text">Name</span>
+                <span className="label-text">Full Name</span>
               </label>
               <input
                 type="text"
                 name="name"
-                placeholder="Name"
-                className="input input-bordered"
+                placeholder="Enter your name"
+                className="input input-bordered w-full"
                 required
               />
             </div>
-            <div className="form-control w-full">
+
+            <div className="form-control">
               <label className="label">
-                <span className="label-text">Photo URL</span>
-              </label>
-              <input
-                type="text"
-                name="photourl"
-                placeholder="Photo URL"
-                className="input input-bordered"
-                required
-              />
-            </div>
-          </div>
-          <div className="md:flex md:gap-2">
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text">Email address</span>
               </label>
               <input
                 type="email"
                 name="email"
-                placeholder="Email"
-                className="input input-bordered"
+                placeholder="Enter your email"
+                className="input input-bordered w-full"
                 required
               />
             </div>
-            <div className="form-control w-full">
+
+            <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
               <input
                 type="password"
                 name="password"
-                placeholder="Password"
-                className="input input-bordered"
+                placeholder="Create a password"
+                className="input input-bordered w-full"
                 required
               />
             </div>
-          </div>
-          <div className="form-control mt-6">
-            <button className="btn bg-default text-white hover:bg-light hover:border-light">
-              Register
-            </button>
-            <div className="divider">OR</div>
+
+            <div className="mt-6">
+              <button type="submit" className="btn btn-primary w-full">
+                Create Account
+              </button>
+            </div>
+
+            <div className="divider text-base-content/60">or continue with</div>
+
             <button
+              type="button"
               onClick={handleGoogleSignIn}
-              className="btn bg-base-200 hover:bg-base-100"
+              className="btn btn-outline w-full"
             >
-              <FcGoogle className="text-2xl" /> Signup with Google
+              <FcGoogle className="text-xl mr-2" />
+              Google
             </button>
-            <p className="text-sm text-center mt-4">
-              Already Have An Account?{" "}
-              <Link
-                className="text-default font-bold hover:underline"
-                to="/login"
-              >
-                Login
+
+            <p className="text-center text-base-content/70 mt-6">
+              Already have an account?{" "}
+              <Link href="/login" className="link link-primary">
+                Sign in
               </Link>
             </p>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
