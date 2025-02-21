@@ -2,12 +2,13 @@ import axios from "axios";
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const AddTaskModal = ({ isAddingTask, setIsAddingTask }) => {
+const AddTaskModal = ({ isAddingTask, setIsAddingTask, refetch }) => {
   //   const [isAddingTask, setIsAddingTask] = useState(false);
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
     category: "To Do",
+    timestamp: new Date().toISOString(),
   });
   const [error, setError] = useState("");
 
@@ -23,6 +24,7 @@ const AddTaskModal = ({ isAddingTask, setIsAddingTask }) => {
       });
       setIsAddingTask(false);
       // You might want to refresh your task list here
+      refetch();
     } catch (err) {
       setError(err.response?.data?.message || "Failed to add task");
     }
@@ -98,6 +100,7 @@ const AddTaskModal = ({ isAddingTask, setIsAddingTask }) => {
 AddTaskModal.propTypes = {
   isAddingTask: PropTypes.bool,
   setIsAddingTask: PropTypes.func,
+  refetch: PropTypes.func,
 };
 
 export default AddTaskModal;
