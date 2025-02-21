@@ -19,15 +19,21 @@ const AuthProvider = ({ children }) => {
 
   const googleProvider = new GoogleAuthProvider();
 
-  const handleGoogleSignIn = () => {
-    return signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-      })
-      .catch((error) => {
-        toast.error(`${error.code}`);
-      });
+  const handleGoogleSignIn = async (callback) => {
+    setLoading(true);
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      setUser(user);
+      toast.success("Successfully signed in!");
+      if (callback) callback();
+      setLoading(false);
+      return result;
+    } catch (error) {
+      toast.error(`${error.code}`);
+      setLoading(false);
+      throw error;
+    }
   };
 
   const createUser = (email, password) => {

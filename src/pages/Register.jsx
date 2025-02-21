@@ -37,6 +37,14 @@ const Register = () => {
     form.reset();
   };
 
+  const handleLogin = async () => {
+    try {
+      await handleGoogleSignIn(() => navigate("/"));
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 py-12 px-4 sm:px-6 lg:px-8">
       <div className="card bg-base-100 w-full max-w-md shadow-xl">
@@ -98,7 +106,7 @@ const Register = () => {
 
             <button
               type="button"
-              onClick={handleGoogleSignIn}
+              onClick={handleLogin}
               className="btn btn-outline w-full"
             >
               <FcGoogle className="text-xl mr-2" />
