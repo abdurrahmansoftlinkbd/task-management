@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Plus, Search, Menu, X, Bell } from "lucide-react";
+import AuthContext from "../context/AuthContext";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { logOut } = useContext(AuthContext);
 
   return (
     <div className="min-h-screen bg-base-200">
@@ -81,7 +83,7 @@ export default function Home() {
                 <li>
                   <a>Settings</a>
                 </li>
-                <li>
+                <li onClick={logOut}>
                   <a>Logout</a>
                 </li>
               </ul>
