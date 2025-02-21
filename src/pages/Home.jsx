@@ -19,7 +19,6 @@ export default function Home() {
       >
         <div className="p-4">
           <div className="flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 bg-primary rounded-lg"></div>
             <h1 className="text-xl font-bold">TaskFlow</h1>
           </div>
 
