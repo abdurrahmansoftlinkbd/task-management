@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Plus, Search, Menu, X, Bell } from "lucide-react";
+import { Plus, Menu, X, Bell } from "lucide-react";
 import AuthContext from "../context/AuthContext";
 
 export default function Home() {
@@ -49,18 +49,6 @@ export default function Home() {
             >
               {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
-            <div className="form-control flex-1 max-w-xs ml-4">
-              <div className="input-group">
-                <input
-                  type="text"
-                  placeholder="Search tasks..."
-                  className="input input-bordered w-full"
-                />
-                <button className="btn btn-square">
-                  <Search size={20} />
-                </button>
-              </div>
-            </div>
           </div>
 
           <div className="flex-none gap-4">
