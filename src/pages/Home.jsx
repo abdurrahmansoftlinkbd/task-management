@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
-import { Plus, Menu, X, Bell } from "lucide-react";
+import { Plus, Menu, X } from "lucide-react";
 import AuthContext from "../context/AuthContext";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { logOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
   return (
     <div className="min-h-screen bg-base-200">
@@ -52,13 +52,14 @@ export default function Home() {
           </div>
 
           <div className="flex-none gap-4">
-            <button className="btn btn-ghost btn-circle">
-              <Bell size={20} />
-            </button>
             <div className="dropdown dropdown-end">
               <div tabIndex={0} className="avatar btn btn-ghost btn-circle">
                 <div className="w-10 rounded-full">
-                  <img src="/api/placeholder/40/40" alt="profile" />
+                  <img
+                    referrerPolicy="no-referrer"
+                    src={user?.photoURL}
+                    alt={user?.displayName}
+                  />
                 </div>
               </div>
               <ul
