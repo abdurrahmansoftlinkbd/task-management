@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const AddTaskModal = ({ isAddingTask, setIsAddingTask }) => {
   //   const [isAddingTask, setIsAddingTask] = useState(false);
@@ -92,6 +93,11 @@ const AddTaskModal = ({ isAddingTask, setIsAddingTask }) => {
       </div>
     </dialog>
   );
+};
+
+AddTaskModal.propTypes = {
+  isAddingTask: PropTypes.bool,
+  setIsAddingTask: PropTypes.func,
 };
 
 export default AddTaskModal;
