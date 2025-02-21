@@ -1,39 +1,32 @@
 import { useContext, useState } from "react";
 import { Plus, Menu, X } from "lucide-react";
 import AuthContext from "../context/AuthContext";
+import { Link } from "react-router-dom";
+import AddTaskModal from "../components/AddTaskModal";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
+  const [isAddingTask, setIsAddingTask] = useState(false);
 
+  // Add Task Modal Component
   return (
     <div className="min-h-screen bg-base-200">
       {/* Sidebar - Hidden on mobile, visible on desktop */}
       <div
         className={`
-        fixed top-0 left-0 h-full w-64 bg-base-100 shadow-lg transform transition-transform duration-300 ease-in-out
-        lg:translate-x-0 ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }
-      `}
+          fixed top-0 left-0 h-full w-64 bg-base-100 shadow-lg transform transition-transform duration-300 ease-in-out
+          lg:translate-x-0 ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          }
+        `}
       >
         <div className="p-4">
-          <div className="flex items-center gap-2 mb-8">
-            <h1 className="text-xl font-bold">TaskFlow</h1>
+          <div className="flex items-center justify-center gap-2 mb-8">
+            <Link to="/">
+              <h1 className="text-2xl font-bold">TaskFlow</h1>
+            </Link>
           </div>
-
-          <nav className="space-y-2">
-            {["Dashboard", "My Tasks", "Projects", "Team", "Calendar"].map(
-              (item) => (
-                <button
-                  key={item}
-                  className="w-full btn btn-ghost justify-start"
-                >
-                  {item}
-                </button>
-              )
-            )}
-          </nav>
         </div>
       </div>
 
@@ -85,11 +78,11 @@ export default function Home() {
           <div className="flex justify-between items-center mb-8">
             <div>
               <h2 className="text-2xl font-bold">My Tasks</h2>
-              <p className="text-base-content/60">
-                Track and manage your tasks efficiently
-              </p>
             </div>
-            <button className="btn btn-primary">
+            <button
+              className="btn btn-primary"
+              onClick={() => setIsAddingTask(true)}
+            >
               <Plus size={20} />
               Add New Task
             </button>
@@ -140,6 +133,11 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {/* Add Task Modal */}
+      <AddTaskModal
+        isAddingTask={isAddingTask}
+        setIsAddingTask={setIsAddingTask}
+      />
     </div>
   );
 }
