@@ -3,38 +3,50 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const Register = () => {
   const { createUser, setUser, updateUserProfile, handleGoogleSignIn } =
     useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
-    const photourl = form.photourl.value;
+    // const photourl = form.photourl.value;
     const email = form.email.value;
     const password = form.password.value;
 
-    createUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        updateUserProfile({
-          displayName: name,
-          photoURL: photourl,
-        })
-          .then(() => {
-            navigate("/");
-          })
-          .catch((error) => {
-            toast.error(`Unable to update profile. ${error}`);
-          });
-        toast.success("Welcome to RecoHub");
-      })
-      .catch((error) => toast.error(`${error.code}`));
-    form.reset();
+    try {
+      const result = await createUser(email, password);
+      const user = result.user;
+      setUser(user);
+      await updateUserProfile({
+        displayName: name,
+        // photoURL: photourl,
+      });
+      const userInfo = {
+        name: name,
+        email: email,
+        // photoURL: photourl,
+        // createdAt: new Date(),
+      };
+      try {
+        const res = await axios.post("http://localhost:5000/users", userInfo);
+        if (res.data.insertedId) {
+          toast.success("Welcome to Task Management");
+          navigate("/");
+        }
+      } catch (dbError) {
+        console.error("Database error:", dbError);
+        toast.error("Account created but failed to store user data");
+      }
+      form.reset();
+    } catch (error) {
+      toast.error(`${error.code}`);
+      console.error("Registration error:", error);
+    }
   };
 
   const handleLogin = async () => {
