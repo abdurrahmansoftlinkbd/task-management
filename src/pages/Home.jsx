@@ -108,21 +108,7 @@ export default function Home() {
                             This is a sample task description that shows how
                             tasks will look in the UI.
                           </p>
-                          <div className="flex justify-between items-center mt-2">
-                            <div className="badge badge-ghost">Frontend</div>
-                            <div className="avatar-group -space-x-4">
-                              {[1, 2].map((user) => (
-                                <div key={user} className="avatar">
-                                  <div className="w-6 h-6">
-                                    <img
-                                      src="/api/placeholder/24/24"
-                                      alt={`user ${user}`}
-                                    />
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
+                          <div className="flex justify-between items-center mt-2"></div>
                         </div>
                       </div>
                     ))}
