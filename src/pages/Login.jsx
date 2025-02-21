@@ -28,6 +28,14 @@ const Login = () => {
       });
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      await handleGoogleSignIn(() => navigate("/"));
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
   return (
     <div className="hero my-24 font-inter">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -63,7 +71,7 @@ const Login = () => {
             <button className="btn btn-block btn-primary ">Login</button>
             <div className="divider">OR</div>
             <button
-              onClick={handleGoogleSignIn}
+              onClick={handleGoogleLogin}
               className=" btn btn-block bg-base-200 hover:bg-base-100"
             >
               <FcGoogle className="text-2xl" />
