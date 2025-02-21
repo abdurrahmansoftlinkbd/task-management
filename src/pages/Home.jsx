@@ -5,13 +5,15 @@ import { Link } from "react-router-dom";
 import AddTaskModal from "../components/AddTaskModal";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
   const [isAddingTask, setIsAddingTask] = useState(false);
-  // const [isEditingTask, setIsEditingTask] = useState(false);
-  // const [currentTask, setCurrentTask] = useState(null);
+  const [isEditingTask, setIsEditingTask] = useState(false);
+  const [currentTask, setCurrentTask] = useState(null);
 
   const { data: tasks = [], refetch } = useQuery({
     queryKey: ["tasks"],
@@ -26,6 +28,75 @@ export default function Home() {
     },
   });
 
+  const handleDeleteTask = async (taskId) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+        customClass: {
+          container: "font-sans",
+        },
+      });
+
+      if (result.isConfirmed) {
+        await axios.delete(`http://localhost:5000/tasks/${taskId}`);
+        refetch();
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your task has been deleted.",
+          icon: "success",
+          customClass: {
+            container: "font-sans",
+          },
+        });
+      }
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
+
+  const handleEditTask = (task) => {
+    setCurrentTask(task);
+    setIsEditingTask(true);
+  };
+
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    setIsUpdating(true);
+    try {
+      // Only include the fields we want to update
+      const updatedTask = {
+        title: currentTask.title,
+        description: currentTask.description,
+        category: currentTask.category,
+        timestamp: new Date().toISOString(),
+      };
+
+      const response = await axios.patch(
+        `http://localhost:5000/tasks/${currentTask._id}`,
+        updatedTask
+      );
+
+      if (response.data.modifiedCount) {
+        setIsEditingTask(false);
+        setCurrentTask(null);
+        refetch();
+        toast.success("Task updated successfully");
+      }
+    } catch (error) {
+      console.error("Failed to update task:", error);
+      toast.error(error.response?.data?.message || "Failed to update task");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
   // Add Task Modal Component
   return (
     <div className="min-h-screen bg-base-200">
@@ -46,7 +117,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
       {/* Main Content */}
       <div className="lg:ml-64 min-h-screen flex flex-col">
         {/* Top Navigation */}
@@ -129,13 +199,13 @@ export default function Home() {
                               <div className="flex gap-2">
                                 <button
                                   className="btn btn-ghost btn-sm"
-                                  // onClick={() => handleEditTask(task)}
+                                  onClick={() => handleEditTask(task)}
                                 >
                                   <Edit size={16} />
                                 </button>
                                 <button
                                   className="btn btn-ghost btn-sm text-error"
-                                  // onClick={() => handleDeleteTask(task._id)}
+                                  onClick={() => handleDeleteTask(task._id)}
                                 >
                                   <Trash2 size={16} />
                                 </button>
@@ -146,7 +216,7 @@ export default function Home() {
                             </p>
                             {task.timestamp && (
                               <div className="text-xs text-base-content/50 mt-2">
-                                {new Date(task.timestamp).toLocaleDateString()}
+                                {new Date(task.timestamp).toLocaleString()}
                               </div>
                             )}
                           </div>
@@ -165,6 +235,86 @@ export default function Home() {
         setIsAddingTask={setIsAddingTask}
         refetch={refetch}
       />
+      {/* Replace your existing edit modal with this updated version: */}
+      {isEditingTask && (
+        <dialog className="modal modal-open">
+          <div className="modal-box rounded-lg shadow-lg p-6">
+            <h3 className="text-xl font-semibold text-gray-800">Edit Task</h3>
+            <form onSubmit={handleEditSubmit} className="space-y-4 mt-4">
+              <div className="form-control">
+                <label className="label font-medium">Title</label>
+                <input
+                  type="text"
+                  className="input input-bordered w-full"
+                  value={currentTask?.title}
+                  onChange={(e) =>
+                    setCurrentTask({ ...currentTask, title: e.target.value })
+                  }
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label font-medium">Description</label>
+                <textarea
+                  className="textarea textarea-bordered w-full"
+                  value={currentTask?.description}
+                  onChange={(e) =>
+                    setCurrentTask({
+                      ...currentTask,
+                      description: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label font-medium">Category</label>
+                <select
+                  className="select select-bordered w-full"
+                  value={currentTask?.category}
+                  onChange={(e) =>
+                    setCurrentTask({ ...currentTask, category: e.target.value })
+                  }
+                >
+                  <option>To Do</option>
+                  <option>In Progress</option>
+                  <option>Done</option>
+                </select>
+              </div>
+              <div className="modal-action flex justify-end gap-3">
+                <button
+                  type="button"
+                  className="btn btn-outline"
+                  onClick={() => {
+                    setIsEditingTask(false);
+                    setCurrentTask(null);
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={isUpdating}
+                >
+                  {isUpdating ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
+            </form>
+          </div>
+          {/* Click outside to close */}
+          <form method="dialog" className="modal-backdrop">
+            <button
+              onClick={() => {
+                setIsEditingTask(false);
+                setCurrentTask(null);
+              }}
+            >
+              close
+            </button>
+          </form>
+        </dialog>
+      )}
     </div>
   );
 }
