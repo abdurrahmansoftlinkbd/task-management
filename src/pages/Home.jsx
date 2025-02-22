@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Plus, Edit, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
 import AddTaskModal from "../components/AddTaskModal";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -9,7 +8,7 @@ import toast from "react-hot-toast";
 import Navbar from "../components/Navbar";
 
 export default function Home() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAddingTask, setIsAddingTask] = useState(false);
   const [isEditingTask, setIsEditingTask] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
@@ -97,32 +96,13 @@ export default function Home() {
     }
   };
   return (
-    <div className="min-h-screen bg-base-200">
-      {/* Sidebar - Hidden on mobile, visible on desktop */}
-      <div
-        className={`
-          fixed top-0 left-0 h-full w-64 bg-base-100 shadow-lg transform transition-transform duration-300 ease-in-out
-          lg:translate-x-0 ${
-            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          }
-        `}
-      >
-        <div className="p-4">
-          <div className="flex items-center justify-center gap-2 mb-8">
-            <Link to="/">
-              <h1 className="text-2xl font-bold">Task Management</h1>
-            </Link>
-          </div>
-        </div>
-      </div>
+    <div className="bg-base-200">
+      {/* nav */}
+      <nav className="bg-base-100 shadow-sm">
+        <Navbar></Navbar>
+      </nav>
       {/* Main Content */}
-      <div className="lg:ml-64 min-h-screen flex flex-col">
-        {/* Top Navigation */}
-        <Navbar
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-        ></Navbar>
-
+      <div className="min-h-screen flex flex-col">
         {/* Main Content Area */}
         <div className="p-6">
           {/* Header */}

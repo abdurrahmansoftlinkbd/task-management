@@ -1,22 +1,15 @@
-import { Menu, X } from "lucide-react";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   return (
-    <nav className="navbar bg-base-100 shadow-sm">
-      <div className="flex-1">
-        <button
-          className="btn btn-ghost lg:hidden"
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        >
-          {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+    <div className="navbar container w-11/12 mx-auto">
+      <div className="navbar-start">
+        <Link className="text-xl font-bold">Task Management</Link>
       </div>
-
-      <div className="flex-none gap-4">
+      <div className="navbar-end gap-2">
         <div className="dropdown dropdown-end">
           <div tabIndex={0} className="avatar btn btn-ghost btn-circle">
             <div className="w-10 rounded-full">
@@ -31,19 +24,17 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
             tabIndex={0}
             className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
           >
-            <li onClick={logOut}>
-              <a>Logout</a>
+            <li>
+              <a>{user?.displayName}</a>
             </li>
           </ul>
         </div>
+        <a className="btn" onClick={logOut}>
+          Logout
+        </a>
       </div>
-    </nav>
+    </div>
   );
-};
-
-Navbar.propTypes = {
-  isSidebarOpen: PropTypes.bool,
-  setIsSidebarOpen: PropTypes.func,
 };
 
 export default Navbar;
