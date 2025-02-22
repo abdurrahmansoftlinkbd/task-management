@@ -25,7 +25,7 @@ const AddTaskModal = ({ isAddingTask, setIsAddingTask, refetch }) => {
       });
       setIsAddingTask(false);
       refetch();
-      toast.success("Task added successfully");
+      toast.success("Task added successfully!");
     } catch (err) {
       toast.error(err?.message);
     }
