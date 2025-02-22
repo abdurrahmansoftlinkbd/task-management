@@ -28,6 +28,8 @@ const AddTaskModal = ({
         title: "",
         description: "",
         category: "To Do",
+        timestamp: new Date().toISOString(),
+        userEmail: userEmail,
       });
       setIsAddingTask(false);
       refetch();
