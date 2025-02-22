@@ -1,16 +1,15 @@
-import { useContext, useState } from "react";
-import { Plus, Menu, X, Edit, Trash2 } from "lucide-react";
-import AuthContext from "../context/AuthContext";
+import { useState } from "react";
+import { Plus, Edit, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import AddTaskModal from "../components/AddTaskModal";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import Navbar from "../components/Navbar";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { user, logOut } = useContext(AuthContext);
   const [isAddingTask, setIsAddingTask] = useState(false);
   const [isEditingTask, setIsEditingTask] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
@@ -97,7 +96,6 @@ export default function Home() {
       setIsUpdating(false);
     }
   };
-  // Add Task Modal Component
   return (
     <div className="min-h-screen bg-base-200">
       {/* Sidebar - Hidden on mobile, visible on desktop */}
@@ -120,44 +118,10 @@ export default function Home() {
       {/* Main Content */}
       <div className="lg:ml-64 min-h-screen flex flex-col">
         {/* Top Navigation */}
-        <div className="navbar bg-base-100 shadow-sm">
-          <div className="flex-1">
-            <button
-              className="btn btn-ghost lg:hidden"
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            >
-              {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
-
-          <div className="flex-none gap-4">
-            <div className="dropdown dropdown-end">
-              <div tabIndex={0} className="avatar btn btn-ghost btn-circle">
-                <div className="w-10 rounded-full">
-                  <img
-                    referrerPolicy="no-referrer"
-                    src={user?.photoURL}
-                    alt={user?.displayName}
-                  />
-                </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <a>Profile</a>
-                </li>
-                <li>
-                  <a>Settings</a>
-                </li>
-                <li onClick={logOut}>
-                  <a>Logout</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <Navbar
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        ></Navbar>
 
         {/* Main Content Area */}
         <div className="p-6">
