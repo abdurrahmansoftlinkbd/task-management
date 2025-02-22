@@ -7,7 +7,9 @@ const Navbar = () => {
   return (
     <div className="navbar container w-11/12 mx-auto">
       <div className="navbar-start">
-        <Link className="text-xl font-bold">Task Management</Link>
+        <Link className="text-2xl font-semibold font-title text-default">
+          Task Management
+        </Link>
       </div>
       <div className="navbar-end gap-2">
         <div className="dropdown dropdown-end">

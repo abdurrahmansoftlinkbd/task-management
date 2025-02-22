@@ -98,7 +98,7 @@ export default function Home() {
   return (
     <div className="bg-base-200">
       {/* nav */}
-      <nav className="bg-base-100 shadow-sm">
+      <nav className="bg-base-100 shadow-sm font-body sticky top-0 z-10 py-1">
         <Navbar></Navbar>
       </nav>
       {/* Main Content */}

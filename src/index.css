@@ -1,2 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Jost:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 @plugin "daisyui";
+
+@theme {
+  --color-default: #5bc43a;
+  --color-light: #006b5f;
+  --font-title: Jost, serif;
+  --font-body: DM Sans, serif;
+}
