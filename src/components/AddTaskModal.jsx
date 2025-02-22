@@ -1,18 +1,19 @@
 import axios from "axios";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import toast from "react-hot-toast";
+import Button from "./Button";
+import CloseOut from "./CloseOut";
 
 const AddTaskModal = ({ isAddingTask, setIsAddingTask, refetch }) => {
-  //   const [isAddingTask, setIsAddingTask] = useState(false);
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
     category: "To Do",
     timestamp: new Date().toISOString(),
   });
-  const [error, setError] = useState("");
 
-  // Add task handler using axios
+  // add task
   const handleAddTask = async (e) => {
     e.preventDefault();
     try {
@@ -23,21 +24,24 @@ const AddTaskModal = ({ isAddingTask, setIsAddingTask, refetch }) => {
         category: "To Do",
       });
       setIsAddingTask(false);
-      // You might want to refresh your task list here
       refetch();
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to add task");
+      toast.error(err?.message);
     }
   };
 
   return (
     <dialog className={`modal ${isAddingTask ? "modal-open" : ""}`}>
       <div className="modal-box rounded-lg shadow-lg p-6">
-        <h3 className="text-xl font-semibold text-gray-800">Add New Task</h3>
-        {error && <div className="alert alert-error my-3 text-sm">{error}</div>}
+        {/* head */}
+        <h3 className="text-xl font-title text-default font-semibold">
+          Add New Task
+        </h3>
+        {/* form */}
         <form onSubmit={handleAddTask} className="space-y-4 mt-4">
+          {/* title */}
           <div className="form-control">
-            <label className="label font-medium">Title</label>
+            <label className="label font-title font-medium">Title</label>
             <input
               type="text"
               placeholder="Task Title"
@@ -50,8 +54,9 @@ const AddTaskModal = ({ isAddingTask, setIsAddingTask, refetch }) => {
               required
             />
           </div>
+          {/* desc */}
           <div className="form-control">
-            <label className="label font-medium">Description</label>
+            <label className="label font-title font-medium">Description</label>
             <textarea
               placeholder="Description (optional)"
               className="textarea textarea-bordered w-full"
@@ -62,8 +67,9 @@ const AddTaskModal = ({ isAddingTask, setIsAddingTask, refetch }) => {
               }
             />
           </div>
+          {/* category */}
           <div className="form-control">
-            <label className="label font-medium">Category</label>
+            <label className="label font-title font-medium">Category</label>
             <select
               className="select select-bordered w-full"
               value={newTask.category}
@@ -76,23 +82,23 @@ const AddTaskModal = ({ isAddingTask, setIsAddingTask, refetch }) => {
               <option>Done</option>
             </select>
           </div>
+          {/* btns */}
           <div className="modal-action flex justify-end gap-3">
             <button
               type="button"
-              className="btn btn-outline"
+              className="btn btn-outline btn-error hover:text-white font-title"
               onClick={() => {
                 setIsAddingTask(false);
-                setError("");
               }}
             >
               Cancel
             </button>
-            <button type="submit" className="btn btn-primary">
-              Add Task
-            </button>
+            <Button text={"Add Task"}></Button>
           </div>
         </form>
       </div>
+      {/* click outside to close */}
+      <CloseOut setIsAddingTask={setIsAddingTask}></CloseOut>
     </dialog>
   );
 };
