@@ -37,15 +37,15 @@ const Login = () => {
   };
 
   return (
-    <div className="hero my-24 font-inter">
+    <div className="hero my-24 font-body">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
         <form onSubmit={handleLogin} className="card-body">
-          <h2 className="uppercase text-center font-semibold text-3xl font-montserrat">
+          <h2 className="uppercase text-center font-semibold text-3xl font-title">
             Welcome Back
           </h2>
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Email</span>
+              <span className="label-text font-title">Email</span>
             </label>
             <input
               type="email"
@@ -57,7 +57,7 @@ const Login = () => {
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Password</span>
+              <span className="label-text font-title">Password</span>
             </label>
             <input
               type="password"
@@ -68,11 +68,13 @@ const Login = () => {
             />
           </div>
           <div className="form-control mt-6">
-            <button className="btn btn-block btn-primary ">Login</button>
+            <button className="btn btn-block bg-default border-default text-white hover:bg-dark hover:border-dark font-title">
+              Login
+            </button>
             <div className="divider">OR</div>
             <button
               onClick={handleGoogleLogin}
-              className=" btn btn-block bg-base-200 hover:bg-base-100"
+              className=" btn btn-block bg-base-200 font-title hover:bg-base-100"
             >
               <FcGoogle className="text-2xl" />
               Sign in with Google
@@ -80,7 +82,7 @@ const Login = () => {
             <p className="text-sm text-center mt-3">
               Don’t have an account?{" "}
               <Link
-                className="text-default font-bold hover:underline"
+                className="text-default font-bold font-title hover:underline"
                 to="/register"
               >
                 Register
