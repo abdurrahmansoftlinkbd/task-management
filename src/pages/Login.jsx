@@ -68,11 +68,15 @@ const Login = () => {
             />
           </div>
           <div className="form-control mt-6">
-            <button className="btn btn-block bg-default border-default text-white hover:bg-dark hover:border-dark font-title">
+            <button
+              type="submit"
+              className="btn btn-block bg-default border-default text-white hover:bg-dark hover:border-dark font-title"
+            >
               Login
             </button>
             <div className="divider">OR</div>
             <button
+              type="button"
               onClick={handleGoogleLogin}
               className=" btn btn-block bg-base-200 font-title hover:bg-base-100"
             >
