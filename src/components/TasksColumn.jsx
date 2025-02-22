@@ -1,5 +1,5 @@
-import { Edit, Trash2 } from "lucide-react";
 import PropTypes from "prop-types";
+import TaskCard from "./TaskCard";
 
 const TasksColumn = ({ tasks, handleEditTask, handleDeleteTask }) => {
   return (
@@ -18,37 +18,12 @@ const TasksColumn = ({ tasks, handleEditTask, handleDeleteTask }) => {
               {tasks
                 .filter((task) => task.category === status)
                 .map((task) => (
-                  <div key={task._id} className="card bg-base-200">
-                    <div className="card-body p-4">
-                      <div className="flex justify-between items-center">
-                        <h4 className="font-semibold font-title">
-                          {task.title}
-                        </h4>
-                        <div className="flex gap-2">
-                          <button
-                            className="btn btn-ghost btn-sm"
-                            onClick={() => handleEditTask(task)}
-                          >
-                            <Edit size={16} />
-                          </button>
-                          <button
-                            className="btn btn-ghost btn-sm text-error"
-                            onClick={() => handleDeleteTask(task._id)}
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </div>
-                      <p className="text-sm text-base-content/70">
-                        {task.description}
-                      </p>
-                      {task.timestamp && (
-                        <div className="text-xs text-base-content/50 mt-2">
-                          {new Date(task.timestamp).toLocaleString()}
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                  <TaskCard
+                    key={task._id}
+                    task={task}
+                    handleEditTask={handleEditTask}
+                    handleDeleteTask={handleDeleteTask}
+                  ></TaskCard>
                 ))}
             </div>
           </div>
