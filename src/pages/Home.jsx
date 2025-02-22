@@ -96,28 +96,27 @@ export default function Home() {
     }
   };
   return (
-    <div className="bg-base-200">
+    <div className="bg-base-200 font-body">
       {/* nav */}
-      <nav className="bg-base-100 shadow-sm font-body sticky top-0 z-10 py-1">
+      <nav className="bg-base-100 shadow-sm sticky top-0 z-10 py-1">
         <Navbar></Navbar>
       </nav>
-      {/* Main Content */}
-      <div className="min-h-screen flex flex-col">
-        {/* Main Content Area */}
-        <div className="p-6">
-          {/* Header */}
-          <div className="flex justify-between items-center mb-8">
+      {/* body */}
+      <div className="container w-11/12 mx-auto flex flex-col">
+        <div className="mt-8">
+          {/* header section */}
+          <header className="flex justify-between items-center mb-8">
             <div>
-              <h2 className="text-2xl font-bold">My Tasks</h2>
+              <h2 className="text-2xl font-semibold font-title">My Tasks</h2>
             </div>
             <button
-              className="btn btn-primary"
+              className="btn bg-default border-default text-white"
               onClick={() => setIsAddingTask(true)}
             >
               <Plus size={20} />
               Add New Task
             </button>
-          </div>
+          </header>
 
           {/* Task Columns */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
