@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import TasksColumn from "../components/TasksColumn";
+import EditModal from "../components/EditModal";
 
 export default function Home() {
   const [isAddingTask, setIsAddingTask] = useState(false);
@@ -124,83 +125,13 @@ export default function Home() {
       />
       {/* Replace your existing edit modal with this updated version: */}
       {isEditingTask && (
-        <dialog className="modal modal-open">
-          <div className="modal-box rounded-lg shadow-lg p-6">
-            <h3 className="text-xl font-semibold text-gray-800">Edit Task</h3>
-            <form onSubmit={handleEditSubmit} className="space-y-4 mt-4">
-              <div className="form-control">
-                <label className="label font-medium">Title</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  value={currentTask?.title}
-                  onChange={(e) =>
-                    setCurrentTask({ ...currentTask, title: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label font-medium">Description</label>
-                <textarea
-                  className="textarea textarea-bordered w-full"
-                  value={currentTask?.description}
-                  onChange={(e) =>
-                    setCurrentTask({
-                      ...currentTask,
-                      description: e.target.value,
-                    })
-                  }
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label font-medium">Category</label>
-                <select
-                  className="select select-bordered w-full"
-                  value={currentTask?.category}
-                  onChange={(e) =>
-                    setCurrentTask({ ...currentTask, category: e.target.value })
-                  }
-                >
-                  <option>To Do</option>
-                  <option>In Progress</option>
-                  <option>Done</option>
-                </select>
-              </div>
-              <div className="modal-action flex justify-end gap-3">
-                <button
-                  type="button"
-                  className="btn btn-outline"
-                  onClick={() => {
-                    setIsEditingTask(false);
-                    setCurrentTask(null);
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={isUpdating}
-                >
-                  {isUpdating ? "Saving..." : "Save Changes"}
-                </button>
-              </div>
-            </form>
-          </div>
-          {/* Click outside to close */}
-          <form method="dialog" className="modal-backdrop">
-            <button
-              onClick={() => {
-                setIsEditingTask(false);
-                setCurrentTask(null);
-              }}
-            >
-              close
-            </button>
-          </form>
-        </dialog>
+        <EditModal
+          handleEditSubmit={handleEditSubmit}
+          currentTask={currentTask}
+          setCurrentTask={setCurrentTask}
+          setIsEditingTask={setIsEditingTask}
+          isUpdating={isUpdating}
+        ></EditModal>
       )}
     </div>
   );
