@@ -31,6 +31,9 @@ export default function Home() {
         return dateB - dateA;
       });
     },
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    staleTime: 0,
   });
 
   // delete data
@@ -120,17 +123,18 @@ export default function Home() {
             tasks={tasks}
             handleEditTask={handleEditTask}
             handleDeleteTask={handleDeleteTask}
-          ></TasksColumn>
+            refetch={refetch}
+          />
         </div>
       </div>
-      {/* Add Task Modal */}
+      {/* addTaskModal */}
       <AddTaskModal
         isAddingTask={isAddingTask}
         setIsAddingTask={setIsAddingTask}
         refetch={refetch}
         userEmail={userEmail}
       />
-      {/* Replace your existing edit modal with this updated version: */}
+      {/* edit modal */}
       {isEditingTask && (
         <EditModal
           handleEditSubmit={handleEditSubmit}
