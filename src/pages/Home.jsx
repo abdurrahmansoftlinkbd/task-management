@@ -110,7 +110,7 @@ export default function Home() {
               <h2 className="text-2xl font-semibold font-title">My Tasks</h2>
             </div>
             <button
-              className="btn bg-default border-default text-white"
+              className="btn bg-default border-default text-white hover:bg-dark hover:border-dark"
               onClick={() => setIsAddingTask(true)}
             >
               <Plus size={20} />
