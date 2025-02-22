@@ -40,7 +40,7 @@ const Login = () => {
     <div className="hero my-24 font-body">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
         <form onSubmit={handleLogin} className="card-body">
-          <h2 className="uppercase text-center font-semibold text-3xl font-title">
+          <h2 className="uppercase text-default text-center font-semibold text-3xl font-title">
             Welcome Back
           </h2>
           <div className="form-control">
