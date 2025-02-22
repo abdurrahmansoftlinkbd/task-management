@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Edit, Trash2 } from "lucide-react";
 import AddTaskModal from "../components/AddTaskModal";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -7,6 +6,7 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
+import TasksColumn from "../components/TasksColumn";
 
 export default function Home() {
   const [isAddingTask, setIsAddingTask] = useState(false);
@@ -103,62 +103,17 @@ export default function Home() {
 
       {/* body */}
       <div className="container w-11/12 mx-auto flex flex-col">
-        <div className="mt-8">
+        {/* main content */}
+        <div className="mt-8 mb-16">
           {/* header section */}
           <Header setIsAddingTask={setIsAddingTask}></Header>
 
-          {/* tasks */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {["To Do", "In Progress", "Done"].map((status) => (
-              <div key={status} className="card bg-base-100 shadow-lg">
-                <div className="card-body">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="card-title text-lg">{status}</h3>
-                    <div className="badge badge-primary">
-                      {tasks.filter((task) => task.category === status).length}
-                    </div>
-                  </div>
-
-                  {/* Task Cards */}
-                  <div className="space-y-4">
-                    {tasks
-                      .filter((task) => task.category === status)
-                      .map((task) => (
-                        <div key={task._id} className="card bg-base-200">
-                          <div className="card-body p-4">
-                            <div className="flex justify-between items-start">
-                              <h4 className="font-medium">{task.title}</h4>
-                              <div className="flex gap-2">
-                                <button
-                                  className="btn btn-ghost btn-sm"
-                                  onClick={() => handleEditTask(task)}
-                                >
-                                  <Edit size={16} />
-                                </button>
-                                <button
-                                  className="btn btn-ghost btn-sm text-error"
-                                  onClick={() => handleDeleteTask(task._id)}
-                                >
-                                  <Trash2 size={16} />
-                                </button>
-                              </div>
-                            </div>
-                            <p className="text-sm text-base-content/70">
-                              {task.description}
-                            </p>
-                            {task.timestamp && (
-                              <div className="text-xs text-base-content/50 mt-2">
-                                {new Date(task.timestamp).toLocaleString()}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          {/* tasks column */}
+          <TasksColumn
+            tasks={tasks}
+            handleEditTask={handleEditTask}
+            handleDeleteTask={handleDeleteTask}
+          ></TasksColumn>
         </div>
       </div>
       {/* Add Task Modal */}
