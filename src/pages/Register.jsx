@@ -14,23 +14,18 @@ const Register = () => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
-    // const photourl = form.photourl.value;
     const email = form.email.value;
     const password = form.password.value;
-
     try {
       const result = await createUser(email, password);
       const user = result.user;
       setUser(user);
       await updateUserProfile({
         displayName: name,
-        // photoURL: photourl,
       });
       const userInfo = {
         name: name,
         email: email,
-        // photoURL: photourl,
-        // createdAt: new Date(),
       };
       try {
         const res = await axios.post("http://localhost:5000/users", userInfo);
@@ -58,20 +53,19 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen font-body flex items-center justify-center bg-base-200 py-12 px-4 sm:px-6 lg:px-8">
       <div className="card bg-base-100 w-full max-w-md shadow-xl">
         <div className="card-body p-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold">Create your account</h2>
-            <p className="text-sm text-base-content/60 mt-2">
-              Join us to get started with your journey
-            </p>
+          <div className="text-center mb-3">
+            <h2 className="text-3xl text-default font-bold font-title uppercase">
+              Create your account
+            </h2>
           </div>
 
           <form onSubmit={handleRegister} className="space-y-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Full Name</span>
+                <span className="label-text font-title">Full Name</span>
               </label>
               <input
                 type="text"
@@ -84,7 +78,7 @@ const Register = () => {
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Email address</span>
+                <span className="label-text font-title">Email address</span>
               </label>
               <input
                 type="email"
@@ -97,7 +91,7 @@ const Register = () => {
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text font-title">Password</span>
               </label>
               <input
                 type="password"
@@ -109,7 +103,10 @@ const Register = () => {
             </div>
 
             <div className="mt-6">
-              <button type="submit" className="btn btn-primary w-full">
+              <button
+                type="submit"
+                className="btn font-title btn-block bg-default border-default text-white hover:bg-dark hover:border-dark"
+              >
                 Create Account
               </button>
             </div>
@@ -119,15 +116,18 @@ const Register = () => {
             <button
               type="button"
               onClick={handleLogin}
-              className="btn btn-outline w-full"
+              className="btn btn-outline btn-block font-title"
             >
               <FcGoogle className="text-xl mr-2" />
               Google
             </button>
 
-            <p className="text-center text-base-content/70 mt-6">
+            <p className="text-center text-base-content/70 mt-2">
               Already have an account?{" "}
-              <Link to="/login" className="link link-primary">
+              <Link
+                to="/login"
+                className="link text-default font-medium font-title"
+              >
                 Sign in
               </Link>
             </p>
