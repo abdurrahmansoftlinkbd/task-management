@@ -23,7 +23,10 @@ const AddTaskModal = ({
   const handleAddTask = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/tasks", newTask);
+      await axios.post(
+        "https://task-management-server-eta-blond.vercel.app/tasks",
+        newTask
+      );
       setNewTask({
         title: "",
         description: "",

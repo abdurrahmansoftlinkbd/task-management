@@ -28,7 +28,10 @@ const Register = () => {
         email: email,
       };
       try {
-        const res = await axios.post("http://localhost:5000/users", userInfo);
+        const res = await axios.post(
+          "https://task-management-server-eta-blond.vercel.app/users",
+          userInfo
+        );
         if (res.data.insertedId) {
           toast.success("Welcome to Task Management");
           navigate("/");

@@ -62,10 +62,13 @@ const TasksColumn = ({ tasks, handleEditTask, handleDeleteTask, refetch }) => {
         try {
           await Promise.all(
             newOrder.map((task, index) =>
-              axios.patch(`http://localhost:5000/tasks/${task._id}`, {
-                order: index,
-                timestamp: new Date().toISOString(),
-              })
+              axios.patch(
+                `https://task-management-server-eta-blond.vercel.app/tasks/${task._id}`,
+                {
+                  order: index,
+                  timestamp: new Date().toISOString(),
+                }
+              )
             )
           );
           refetch();
@@ -80,11 +83,14 @@ const TasksColumn = ({ tasks, handleEditTask, handleDeleteTask, refetch }) => {
         .sort((a, b) => (b.order || 0) - (a.order || 0));
 
       try {
-        await axios.patch(`http://localhost:5000/tasks/${activeId}`, {
-          category: overContainer,
-          order: targetTasks.length,
-          timestamp: new Date().toISOString(),
-        });
+        await axios.patch(
+          `https://task-management-server-eta-blond.vercel.app/tasks/${activeId}`,
+          {
+            category: overContainer,
+            order: targetTasks.length,
+            timestamp: new Date().toISOString(),
+          }
+        );
         refetch();
       } catch (error) {
         console.error("Failed to update task:", error);

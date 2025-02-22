@@ -30,7 +30,10 @@ const AuthProvider = ({ children }) => {
         name: result.user?.displayName,
       };
       try {
-        const res = await axios.post("http://localhost:5000/users", userInfo);
+        const res = await axios.post(
+          "https://task-management-server-eta-blond.vercel.app/users",
+          userInfo
+        );
         if (res) {
           toast.success("Welcome");
         }

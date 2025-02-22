@@ -23,7 +23,7 @@ export default function Home() {
     queryKey: ["tasks"],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/tasks?email=${userEmail}`
+        `https://task-management-server-eta-blond.vercel.app/tasks?email=${userEmail}`
       );
       return response.data.sort((a, b) => {
         const dateA = new Date(a.timestamp || 0);
@@ -52,7 +52,9 @@ export default function Home() {
         },
       });
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5000/tasks/${taskId}`);
+        await axios.delete(
+          `https://task-management-server-eta-blond.vercel.app/tasks/${taskId}`
+        );
         refetch();
         Swal.fire({
           title: "Deleted!",
@@ -87,7 +89,7 @@ export default function Home() {
         userEmail: userEmail,
       };
       const response = await axios.patch(
-        `http://localhost:5000/tasks/${currentTask._id}`,
+        `https://task-management-server-eta-blond.vercel.app/tasks/${currentTask._id}`,
         updatedTask
       );
       if (response.data.modifiedCount) {
