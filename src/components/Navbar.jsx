@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   return (
-    <div className="navbar container w-11/12 mx-auto">
+    <div className="navbar container w-11/12 mx-auto p-0">
       <div className="navbar-start">
         <Link className="text-2xl font-semibold font-title text-default">
           Task Management
