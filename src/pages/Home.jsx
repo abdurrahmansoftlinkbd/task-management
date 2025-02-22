@@ -1,23 +1,24 @@
 import { useState } from "react";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import AddTaskModal from "../components/AddTaskModal";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import Navbar from "../components/Navbar";
+import Header from "../components/Header";
 
 export default function Home() {
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAddingTask, setIsAddingTask] = useState(false);
   const [isEditingTask, setIsEditingTask] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
 
+  // fetch and get data
   const { data: tasks = [], refetch } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
       const response = await axios.get("http://localhost:5000/tasks");
-      // Sort tasks by timestamp in descending order (newest first)
       return response.data.sort((a, b) => {
         const dateA = new Date(a.timestamp || 0);
         const dateB = new Date(b.timestamp || 0);
@@ -26,6 +27,7 @@ export default function Home() {
     },
   });
 
+  // delete data
   const handleDeleteTask = async (taskId) => {
     try {
       const result = await Swal.fire({
@@ -40,7 +42,6 @@ export default function Home() {
           container: "font-sans",
         },
       });
-
       if (result.isConfirmed) {
         await axios.delete(`http://localhost:5000/tasks/${taskId}`);
         refetch();
@@ -58,30 +59,27 @@ export default function Home() {
     }
   };
 
+  // edit modal
   const handleEditTask = (task) => {
     setCurrentTask(task);
     setIsEditingTask(true);
   };
 
-  const [isUpdating, setIsUpdating] = useState(false);
-
+  // edit task
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     setIsUpdating(true);
     try {
-      // Only include the fields we want to update
       const updatedTask = {
         title: currentTask.title,
         description: currentTask.description,
         category: currentTask.category,
         timestamp: new Date().toISOString(),
       };
-
       const response = await axios.patch(
         `http://localhost:5000/tasks/${currentTask._id}`,
         updatedTask
       );
-
       if (response.data.modifiedCount) {
         setIsEditingTask(false);
         setCurrentTask(null);
@@ -95,6 +93,7 @@ export default function Home() {
       setIsUpdating(false);
     }
   };
+
   return (
     <div className="bg-base-200 font-body">
       {/* nav */}
@@ -106,18 +105,7 @@ export default function Home() {
       <div className="container w-11/12 mx-auto flex flex-col">
         <div className="mt-8">
           {/* header section */}
-          <header className="flex justify-between items-center mb-8">
-            <div>
-              <h2 className="text-2xl font-semibold font-title">My Tasks</h2>
-            </div>
-            <button
-              className="btn bg-default border-default text-white hover:bg-dark hover:border-dark font-title"
-              onClick={() => setIsAddingTask(true)}
-            >
-              <Plus size={20} />
-              Add New Task
-            </button>
-          </header>
+          <Header setIsAddingTask={setIsAddingTask}></Header>
 
           {/* tasks */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
