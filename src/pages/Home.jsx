@@ -101,6 +101,7 @@ export default function Home() {
       <nav className="bg-base-100 shadow-sm sticky top-0 z-10 py-1">
         <Navbar></Navbar>
       </nav>
+
       {/* body */}
       <div className="container w-11/12 mx-auto flex flex-col">
         <div className="mt-8">
@@ -110,7 +111,7 @@ export default function Home() {
               <h2 className="text-2xl font-semibold font-title">My Tasks</h2>
             </div>
             <button
-              className="btn bg-default border-default text-white hover:bg-dark hover:border-dark"
+              className="btn bg-default border-default text-white hover:bg-dark hover:border-dark font-title"
               onClick={() => setIsAddingTask(true)}
             >
               <Plus size={20} />
@@ -118,7 +119,7 @@ export default function Home() {
             </button>
           </header>
 
-          {/* Task Columns */}
+          {/* tasks */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {["To Do", "In Progress", "Done"].map((status) => (
               <div key={status} className="card bg-base-100 shadow-lg">
