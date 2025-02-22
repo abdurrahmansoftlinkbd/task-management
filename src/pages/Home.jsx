@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AddTaskModal from "../components/AddTaskModal";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -8,18 +8,23 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import TasksColumn from "../components/TasksColumn";
 import EditModal from "../components/EditModal";
+import AuthContext from "../context/AuthContext";
 
 export default function Home() {
   const [isAddingTask, setIsAddingTask] = useState(false);
   const [isEditingTask, setIsEditingTask] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const { user } = useContext(AuthContext);
+  const userEmail = user?.email;
 
   // fetch and get data
   const { data: tasks = [], refetch } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/tasks");
+      const response = await axios.get(
+        `http://localhost:5000/tasks?email=${userEmail}`
+      );
       return response.data.sort((a, b) => {
         const dateA = new Date(a.timestamp || 0);
         const dateB = new Date(b.timestamp || 0);
@@ -76,6 +81,7 @@ export default function Home() {
         description: currentTask.description,
         category: currentTask.category,
         timestamp: new Date().toISOString(),
+        userEmail: userEmail,
       };
       const response = await axios.patch(
         `http://localhost:5000/tasks/${currentTask._id}`,
@@ -103,7 +109,7 @@ export default function Home() {
       </nav>
 
       {/* body */}
-      <div className="container w-11/12 mx-auto flex flex-col">
+      <div className="min-h-screen container w-11/12 mx-auto flex flex-col">
         {/* main content */}
         <div className="mt-8 mb-16">
           {/* header section */}
@@ -122,6 +128,7 @@ export default function Home() {
         isAddingTask={isAddingTask}
         setIsAddingTask={setIsAddingTask}
         refetch={refetch}
+        userEmail={userEmail}
       />
       {/* Replace your existing edit modal with this updated version: */}
       {isEditingTask && (

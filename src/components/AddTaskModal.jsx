@@ -5,12 +5,18 @@ import toast from "react-hot-toast";
 import Button from "./Button";
 import CloseOut from "./CloseOut";
 
-const AddTaskModal = ({ isAddingTask, setIsAddingTask, refetch }) => {
+const AddTaskModal = ({
+  isAddingTask,
+  setIsAddingTask,
+  refetch,
+  userEmail,
+}) => {
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
     category: "To Do",
     timestamp: new Date().toISOString(),
+    userEmail: userEmail,
   });
 
   // add task
@@ -108,6 +114,7 @@ AddTaskModal.propTypes = {
   isAddingTask: PropTypes.bool,
   setIsAddingTask: PropTypes.func,
   refetch: PropTypes.func,
+  userEmail: PropTypes.string,
 };
 
 export default AddTaskModal;
